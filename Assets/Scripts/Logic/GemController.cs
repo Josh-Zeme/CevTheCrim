@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GemController : MonoBehaviour
 {
-    private int _GemCount = 0;
     private int _GemsNeededToWin = 4;
     Gem _DestructableGem;
     [SerializeField] List<Gem> _Gems;
@@ -14,16 +14,12 @@ public class GemController : MonoBehaviour
     public void CollectGem(int number)
     {
         _GemImages[number].enabled = true;
-        _GemCount += 1;
-
-        if (_GemCount == _GemsNeededToWin)
+        if (_GemImages.Where(x => x.enabled).Count() == _GemsNeededToWin)
             CompleteGame();
     }
 
     public void Restart()
     {
-        _GemCount = 0;
-
         foreach (var _gem in _Gems)
         {
             _gem.Restart();

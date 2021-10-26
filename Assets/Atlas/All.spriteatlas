@@ -35,16 +35,17 @@ SpriteAtlas:
       m_ForceMaximumCompressionQuality_BC6H_BC7: 0
     packingSettings:
       serializedVersion: 2
-      padding: 4
+      padding: 8
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
-      enableTightPacking: 1
+      enableTightPacking: 0
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 7bc9e56a6c67dc7478b3d6478064df0b, type: 3}
-    totalSpriteSurfaceArea: 1295502
+    - {fileID: 102900000, guid: 14845f5e6fbc8174396c34ba0296dbaf, type: 3}
+    totalSpriteSurfaceArea: 1566411
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -310,6 +311,7 @@ SpriteAtlas:
   - {fileID: 1247681839369633741, guid: 8fcff9b616ab8624588820be22e61a30, type: 3}
   - {fileID: 5100519936939075150, guid: 8fcff9b616ab8624588820be22e61a30, type: 3}
   - {fileID: 318553478715962029, guid: 8fcff9b616ab8624588820be22e61a30, type: 3}
+  - {fileID: 21300000, guid: ccc020d6f1600cb46b2b7f9de7c4c7f7, type: 3}
   - {fileID: -2541545257365837973, guid: 64dd44d7d0741b0478c1a6fcb8e1b040, type: 3}
   - {fileID: -6407714468422981231, guid: 64dd44d7d0741b0478c1a6fcb8e1b040, type: 3}
   - {fileID: 533177413809491475, guid: 64dd44d7d0741b0478c1a6fcb8e1b040, type: 3}
@@ -493,6 +495,7 @@ SpriteAtlas:
   - {fileID: 5427169084622684963, guid: efbc08fbf1878774ea5bc59d504aceff, type: 3}
   - {fileID: 21300000, guid: 36f369fb36da4fc4f896d3daf8a4ec41, type: 3}
   - {fileID: 21300000, guid: 4e59346c1a7d02f4a8026860c0e1e507, type: 3}
+  - {fileID: 21300000, guid: 3d9aadcc665d7f14585d0781be874221, type: 3}
   - {fileID: -5704435618003939455, guid: 7a7697ecfcc600a428132301b953438e, type: 3}
   - {fileID: -2244629353412065918, guid: 7a7697ecfcc600a428132301b953438e, type: 3}
   - {fileID: -6613146899053534618, guid: 7a7697ecfcc600a428132301b953438e, type: 3}
@@ -767,6 +770,7 @@ SpriteAtlas:
   - Warehouse_114
   - Warehouse_119
   - Warehouse_118
+  - Controller
   - Frames_0
   - Frames_1
   - Frames_2
@@ -950,6 +954,7 @@ SpriteAtlas:
   - Tiles_42
   - Whitevault
   - SandWhip
+  - UI
   - PlayerMock_3
   - PlayerMock_2
   - PlayerMock_1

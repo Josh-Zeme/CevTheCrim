@@ -139,7 +139,7 @@ public class SoundController : MonoBehaviour
     }
     public void PlaySand()
     {
-        PlayGlobalAudioSource(_Sand);
+        PlayAudioSource(_Sand);
     }
     public void StopSand()
     {
@@ -147,7 +147,7 @@ public class SoundController : MonoBehaviour
     }
     public void PlaySandStart()
     {
-        PlayGlobalAudioSource(_SandStart);
+        PlayAudioSource(_SandStart);
     }
     public void PlaySlide()
     {
