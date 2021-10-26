@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Beat
+  - Killbox
+  - Blocker
+  - Pushable
+  - Triggerable
+  - Activator
+  - ReverseTiles
+  - CopyBot
+  - Killer
+  - Redirector
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Ground
+  - Ladder
+  - NPC
+  - HazardZap
+  - WallGrabber
+  - Reverter
+  - Slippy
+  - MusicBox
+  - Player
+  - NPCBody
+  - BossProjectile
+  - HazardUgh
+  - Gem
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Map
+    uniqueID: 2851566473
+    locked: 0
+  - name: Cables
+    uniqueID: 2137066431
+    locked: 0
+  - name: Player
+    uniqueID: 3215593191
+    locked: 0
+  - name: UI
+    uniqueID: 1709951885
+    locked: 0
+  - name: Beats
+    uniqueID: 2216011895
+    locked: 0
+  - name: ButtonController
+    uniqueID: 1315071085
+    locked: 0
