@@ -48,7 +48,9 @@ public class Player : MonoBehaviour
     private float _TimeJumpPressedRemaining = 0;
     private float _TimeCoyoteJumpStart = 0.1f;
     private float _TimeCoyoteJumpRemaining = 0f;
-    private float _TimeWallJumpDeactivatorStart = 0.1f;
+    private float _TimeSlippyStart = 0.5f;
+    private float _TimeSlippyRemaining = 0f;
+    private float _TimeWallJumpDeactivatorStart = 0.2f;
     private float _TimeWallJumpDeactivatorRemaining = 0f;
     private float _TimeDashStart = 0.25f;
     private float _TimeDuckStart = 0.20f;
@@ -72,11 +74,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         _IsTouchingGround = _FeetCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground"));
-        if(_IsTouchingSlippy && !_FeetCollider2D.IsTouchingLayers(LayerMask.GetMask("Slippy")))
-        {
-            _IsStartedSlippy = false;
-            _SoundController.StopWaterSlip();
-        }
         _IsTouchingSlippy = _FeetCollider2D.IsTouchingLayers(LayerMask.GetMask("Slippy"));
         _IsTouchingReverter = _BodyCollider2D.IsTouchingLayers(LayerMask.GetMask("Reverter"));
 
@@ -142,16 +139,26 @@ public class Player : MonoBehaviour
             _TimeReverseEndRemaining = _TimeReverseEndStart;
         }
 
-        if (_IsTouchingSlippy)
+        var _preSlipRunVelocity = _RunVelocity;
+        if (_IsTouchingSlippy || _TimeSlippyRemaining > 0)
         {
-            if(!_IsStartedSlippy)
+            if (_IsTouchingSlippy)
+                _TimeSlippyRemaining = _TimeSlippyStart;
+               
+            if (!_IsStartedSlippy)
                 _SoundController.PlayWaterSlip();
+
             _IsStartedSlippy = true;
-            _RunVelocity = transform.localScale.x * -1;
+            _preSlipRunVelocity = _PreviousDirection;
         }
 
-        var _tempRunVelocity = _TimeMoveAfterWallJumpRemaining > 0 ? 0 : _RunVelocity * _DirectionScale;
-        // reverse jumps are fucking stupid and they go the wrong way?
+        if (_IsStartedSlippy && _TimeSlippyRemaining < 0)
+        {
+            _SoundController.StopWaterSlip();
+            _IsStartedSlippy = false;
+        }
+
+        var _tempRunVelocity = _TimeMoveAfterWallJumpRemaining > 0 ? 0 : _preSlipRunVelocity * _DirectionScale;
         var _jumpVelocity = _TimeWallJumpVelocityRemaining > 0 ? Mathf.Lerp(0, _WallJumpSpeed * _Direction, _TimeWallJumpVelocityRemaining / _TimeWallJumpVelocityStart) : 0;
         var _dashVelocity = _TimeDashRemaining > 0 ?  Mathf.Lerp(0, _DashSpeed * transform.localScale.x * -1, _TimeDashRemaining / _TimeDashStart) : 0;
         var _horizontalVelocity = Mathf.Abs(_jumpVelocity) > Mathf.Abs((_tempRunVelocity * _RunSpeed)) ? _jumpVelocity : ((_tempRunVelocity * _RunSpeed) + _dashVelocity);
@@ -172,6 +179,7 @@ public class Player : MonoBehaviour
         _TimeReverseStartRemaining -= Time.deltaTime;
         _TimeReverseEndRemaining -= Time.deltaTime;
         _TimeMoveAfterWallJumpRemaining -= Time.deltaTime;
+        _TimeSlippyRemaining -= Time.deltaTime;
 
         if (_TimeReverseStartRemaining < 0 && !_IsReverterActivated && _IsTouchingReverter)
         {
@@ -204,7 +212,7 @@ public class Player : MonoBehaviour
 
     public void Move(float direction)
     {
-        if (!_IsMoveAllowed || _IsTouchingSlippy)
+        if (!_IsMoveAllowed)
             return;
 
         if (_TimeWallJumpDeactivatorRemaining > 0)
@@ -242,6 +250,7 @@ public class Player : MonoBehaviour
         if (_IsWallJumpAllowed && !_isTouchingGround && !_IsWallJumpComplete)
         {
             _SoundController.PlayWallJump();
+            _IsDashComplete = false;
             Vector2 _jumpVelocity = new Vector2(0, (_JumpSpeed * _GravityScale));
             _Rigidbody2D.velocity = _jumpVelocity;
             _IsWallJumpComplete = true;

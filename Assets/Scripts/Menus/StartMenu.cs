@@ -8,6 +8,7 @@ public class StartMenu : MonoBehaviour
 {
     private GameLogic _GameLogic;
     [SerializeField] private TextMeshProUGUI[] _MenuItems;
+    [SerializeField] private TextMeshProUGUI _BestTime;
     [SerializeField] private Color _SelectedColour;
     [SerializeField] private Color _UnselectedColour;
     [SerializeField] private Slider _MusicVolumeSlider;
@@ -84,13 +85,26 @@ public class StartMenu : MonoBehaviour
 
         if (_SelectedMainItem == _QuitItemId)
         {
-            Application.Quit();
+            QuitGame();
         }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     public void StartGame()
     {
         _SoundController.PlayMenuClose();
         _GameLogic.StartGame();
+    }
+
+    public void SetBestTimer(string time)
+    {
+        if (time != null)
+            _BestTime.text = GameSettings.BestTime + time;
+        else
+            _BestTime.text = GameSettings.BestTime + "N/A";
     }
 }

@@ -45,7 +45,7 @@ SpriteAtlas:
     packables:
     - {fileID: 102900000, guid: 7bc9e56a6c67dc7478b3d6478064df0b, type: 3}
     - {fileID: 102900000, guid: 14845f5e6fbc8174396c34ba0296dbaf, type: 3}
-    totalSpriteSurfaceArea: 1566411
+    totalSpriteSurfaceArea: 1571531
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -163,6 +163,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 1ec7d953ee730e84494c990bb29df293, type: 3}
   - {fileID: 21300000, guid: f99547049b3dfd14bb5e693d6c49e3a2, type: 3}
   - {fileID: 21300000, guid: 5f9bf8a487442dd45aa63e46c1a84658, type: 3}
+  - {fileID: 21300000, guid: b8db11b49a5e1624f9a3697f5546014b, type: 3}
   - {fileID: -7953201556053135790, guid: 42b70c651df983447a5aeebffbaf07ea, type: 3}
   - {fileID: 6485760477551526432, guid: 42b70c651df983447a5aeebffbaf07ea, type: 3}
   - {fileID: -128643420482547384, guid: 42b70c651df983447a5aeebffbaf07ea, type: 3}
@@ -508,6 +509,10 @@ SpriteAtlas:
   - {fileID: -5273302420525626735, guid: 7a7697ecfcc600a428132301b953438e, type: 3}
   - {fileID: 21300000, guid: 835dab0efaf640f4b8d8e6472aaf3eb9, type: 3}
   - {fileID: 21300000, guid: f7c38a4e4784e1b428b787e107d90c4a, type: 3}
+  - {fileID: 3598714856469743548, guid: 4ee7c4de8b9a67442989dd54d04e3809, type: 3}
+  - {fileID: -2511356291957038328, guid: 4ee7c4de8b9a67442989dd54d04e3809, type: 3}
+  - {fileID: -16793423984005362, guid: 4ee7c4de8b9a67442989dd54d04e3809, type: 3}
+  - {fileID: -4672790576089934573, guid: 4ee7c4de8b9a67442989dd54d04e3809, type: 3}
   - {fileID: 7482667652216324306, guid: 538ea64f15b2f7a47a1e6ce71c807154, type: 3}
   m_PackedSpriteNamesToIndex:
   - Legs_1
@@ -622,6 +627,7 @@ SpriteAtlas:
   - Wallslide
   - ThePause
   - Slider
+  - ReverseSign
   - VentsBottom_4
   - VentsBottom_1
   - VentsBottom_0
@@ -967,6 +973,10 @@ SpriteAtlas:
   - PlayerMock_8
   - TheBoss
   - GameName
+  - gems_2
+  - gems_3
+  - gems_0
+  - gems_1
   - Square
   m_RenderDataMap: {}
   m_Tag: All

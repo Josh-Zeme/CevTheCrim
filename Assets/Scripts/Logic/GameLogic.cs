@@ -8,7 +8,8 @@ using System;
 public class GameLogic : MonoBehaviour
 {
     private static InputController _InputController;
-    
+
+    [SerializeField] private TextMeshProUGUI _RunTime;
     [SerializeField] private Player _Player;
     [SerializeField] private GemController _GemController;
     [SerializeField] private BossController _BossController;
@@ -16,6 +17,7 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private PauseMenu _PauseMenu;
     [SerializeField] private StartMenu _StartMenu;
     [SerializeField] private BossHealthUI _BossHealthUI;
+    [SerializeField] private GameData _GameData;
   
     [SerializeField] private AudioClip _MenuSong;
     [SerializeField] private AudioClip _StartLevelSong;
@@ -24,10 +26,12 @@ public class GameLogic : MonoBehaviour
 
     [SerializeField] private bool _IsForceStart = false;
     private bool _IsStarted = false;
-    private float _MusicVolume = 0.1f;
-    [NonSerialized] public float SoundVolume = 0.1f;
+    private float _MusicVolume = 0.25f;
+    [NonSerialized] public float SoundVolume = 0.15f;
     public bool IsLevelMenuActive = false;
     public bool IsStartMenuActive = true;
+    public float RunTime;
+    public float BestTime;
 
     private void Awake()
     {
@@ -42,7 +46,10 @@ public class GameLogic : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-         _StartMenu.gameObject.SetActive(IsStartMenuActive);
+        BestTime = _GameData.Load();
+        var _bestTime = BestTime <= 0 ? null : TimerToString(BestTime);
+        _StartMenu.SetBestTimer(_bestTime);
+        _StartMenu.gameObject.SetActive(IsStartMenuActive);
         _InputController = GameSettings.InputController;
         _InputController.Menus.Action.performed += _ => Action();
         _InputController.Menus.Escape.performed += _ => Escape();
@@ -64,6 +71,12 @@ public class GameLogic : MonoBehaviour
             _Conductor.SetSong(_MenuSong);
             _Conductor.StartSong();
             _IsStarted = true;
+        }
+
+        if (_IsStarted && !IsLevelMenuActive)
+        {
+            RunTime += Time.deltaTime;
+            _RunTime.text = TimerToString(RunTime);
         }
     }
 
@@ -99,11 +112,6 @@ public class GameLogic : MonoBehaviour
         {
             PauseLevel();
         }
-    }
-
-    public void StartCutScene()
-    {
-        _Conductor.Pause();
     }
 
     public void Movement(Vector2 direction)
@@ -162,7 +170,9 @@ public class GameLogic : MonoBehaviour
         _StartMenu.gameObject.SetActive(IsStartMenuActive);
         _MusicBoxes.SetActive(true);
         _TheGems.SetActive(true);
+        _RunTime.gameObject.SetActive(true);
         _Player.StartCutscene("Time to steal some stuff");
+        _IsStarted = true;
     }
 
     public void InitializeStartMenu()
@@ -197,7 +207,11 @@ public class GameLogic : MonoBehaviour
         Time.timeScale = 0;
         IsLevelMenuActive = true;
         _TheGems.SetActive(false);
+        _RunTime.gameObject.SetActive(false);
+        var _bestTime = BestTime <= 0 ? null : TimerToString(BestTime);
+        _PauseMenu.SetBestTimer(_bestTime);
         _PauseMenu.gameObject.SetActive(IsLevelMenuActive);
+        _PauseMenu.SetRunTimer(TimerToString(RunTime));
         _PauseMenu.SetSoundVolumeSlider(SoundVolume);
         _PauseMenu.SetMusicVolumeSlider(_MusicVolume);
     }
@@ -207,6 +221,7 @@ public class GameLogic : MonoBehaviour
         Time.timeScale = 1;
         IsLevelMenuActive = false;
         _TheGems.SetActive(true);
+        _RunTime.gameObject.SetActive(true);
         _PauseMenu.gameObject.SetActive(IsLevelMenuActive);
     }
 
@@ -215,10 +230,18 @@ public class GameLogic : MonoBehaviour
         _Player.Restart();
         _GemController.Restart();
         _BossController.Restart();
+        RunTime = 0;
     }
 
     public void FullRestart()
     {
+        if (BestTime <= 0 || RunTime < BestTime)
+        {
+            _GameData.Save();
+            BestTime = RunTime;
+             var _bestTime = BestTime <= 0 ? null : TimerToString(BestTime);
+            _StartMenu.SetBestTimer(_bestTime);
+        }
         RestartLevel();
         _IsStarted = false;
         Time.timeScale = 0;
@@ -226,6 +249,17 @@ public class GameLogic : MonoBehaviour
         _StartMenu.gameObject.SetActive(IsStartMenuActive);
         _MusicBoxes.SetActive(false);
         _TheGems.SetActive(false);
+        _RunTime.gameObject.SetActive(false);
         InitializeStartMenu();
+        RunTime = 0;
+    }
+
+    private string TimerToString(float time)
+    {
+        string _hours = ((int)time / 3600).ToString("00");
+        float _hoursFloat = time % 3600;
+        string _minutes = ((int)_hoursFloat / 60).ToString("00");
+        string _seconds = (_hoursFloat % 60).ToString("00");
+        return $"{_hours}:{_minutes}:{_seconds}";
     }
 }

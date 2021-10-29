@@ -8,6 +8,8 @@ public class PauseMenu : MonoBehaviour
 {
     private GameLogic _GameLogic;
     [SerializeField] private TextMeshProUGUI[] _MenuItems;
+    [SerializeField] private TextMeshProUGUI _RunTime;
+    [SerializeField] private TextMeshProUGUI _BestTime;
     [SerializeField] private Color _SelectedColour;
     [SerializeField] private Color _UnselectedColour;
     [SerializeField] private Slider _MusicVolumeSlider;
@@ -80,19 +82,34 @@ public class PauseMenu : MonoBehaviour
     {
         if (_SelectedMainItem == _ResumeGameItemId)
         {
-            _GameLogic.ResumeLevel();
+            ResumeLevel();
         }
 
         if (_SelectedMainItem == _RestartGameItemId)
         {
-            _GameLogic.RestartLevel();
-            _GameLogic.ResumeLevel();
+            RestartGame();
         }
 
         if (_SelectedMainItem == _QuitItemId)
         {
-            Application.Quit();
+            QuitGame();
         }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void RestartGame()
+    {
+        _GameLogic.RestartLevel();
+        _GameLogic.ResumeLevel();
+    }
+
+    public void ResumeLevel()
+    {
+        _GameLogic.ResumeLevel();
     }
 
     public void SetSoundVolumeSlider(float value)
@@ -103,5 +120,18 @@ public class PauseMenu : MonoBehaviour
     public void SetMusicVolumeSlider(float value)
     {
         _MusicVolumeSlider.value = value;
+    }
+
+    public void SetRunTimer(string time)
+    {
+        _RunTime.text = GameSettings.RunTime + time;
+    }
+
+    public void SetBestTimer(string time)
+    {
+        if (time != null)
+            _BestTime.text = GameSettings.BestTime + time;
+        else
+            _BestTime.text = GameSettings.BestTime + "N/A";
     }
 }
